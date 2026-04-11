@@ -1,10 +1,217 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>てるクマ Script Manager</title>
+    <style>
+        :root {
+            --bg-dark: #0d0f11;
+            --bg-panel: #16191d;
+            --accent: #e74c3c;
+            --copy-bg: #2ecc71;
+            --text: #ecf0f1;
+            --border: #2c3e50;
+            --btn-blue: #3498db;
+            --btn-green: #27ae60;
+        }
+
+        /* スクロールバー非表示（全体） */
+        ::-webkit-scrollbar { width: 0px; height: 0px; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--bg-panel);
+            padding: 15px 10px;
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* タイトルとナビをスマホでも見やすく */
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column; /* スマホでは縦並び */
+            align-items: center;
+            gap: 15px;
+        }
+
+        @media (min-width: 600px) {
+            .header-content { flex-direction: row; justify-content: space-between; padding: 0 20px; }
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 18px; }
+        .logo {
+            width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--border);
+            background-image: url('image_1.png'); background-size: cover; background-position: center;
+            background-color: #fff;
+        }
+
+        .header-links { display: flex; gap: 15px; }
+        .nav-item {
+            color: #bdc3c7;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .nav-item.active { color: var(--accent); background: rgba(231, 76, 60, 0.1); }
+
+        .container { flex: 1; padding: 15px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* レスポンシブグリッド：スマホ1列、タブレット2列、PC3列 */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .script-card {
+            background: var(--bg-panel);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 15px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .script-title { font-size: 14px; font-weight: bold; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+
+        .code-preview {
+            background: #000; padding: 10px; border-radius: 5px;
+            font-family: 'Consolas', monospace; font-size: 10px; color: #00ff88;
+            word-break: break-all;
+            white-space: pre-wrap;
+            max-height: 80px;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .code-preview::-webkit-scrollbar { display: none; }
+
+        .copy-btn {
+            background: var(--accent); color: white; border: none; padding: 10px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px;
+        }
+        .copy-btn.success { background: var(--copy-bg); }
+
+        /* Key / Executor リスト */
+        .list-container { display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin: 10px auto; }
+        .list-title { color: var(--accent); font-size: 16px; font-weight: bold; margin-top: 15px; }
+        
+        .action-button {
+            background: var(--bg-panel); border: 2px solid var(--btn-blue); color: var(--text);
+            padding: 15px; border-radius: 10px; text-align: center; text-decoration: none;
+            font-weight: bold; font-size: 14px;
+        }
+        .action-button.home { border-color: var(--btn-green); }
+
+    </style>
 </head>
 <body>
-<h1>テスト</h1>
+
+<header>
+    <div class="header-content">
+        <div class="logo-area">
+            <div class="logo"></div>
+            <span>てるクマ Script Manager</span>
+        </div>
+        <div class="header-links">
+            <span class="nav-item active" onclick="showSection('script-sec', this)">script</span>
+            <span class="nav-item" onclick="showSection('key-sec', this)">Keyサイト</span>
+            <span class="nav-item" onclick="showSection('exec-sec', this)">Executor</span>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="script-sec" class="section active">
+        <div class="grid">
+            <div class="script-card"><div class="script-title">てるクマ Script 8.5 (Kaminagai)</div><div class="code-preview" id="s1">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript8.5/refs/heads/main/terukumakaminagai"))()</div><button class="copy-btn" onclick="copyCode(this, 's1')">コピー</button></div>
+            <div class="script-card"><div class="script-title">てるクマ Fling (Ikemen)</div><div class="code-preview" id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumafling/refs/heads/main/terukumaikemen"))()</div><button class="copy-btn" onclick="copyCode(this, 's2')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Universal Aimbot (Mobile)</div><div class="code-preview" id="s3">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-Mobile-34677"))()</div><button class="copy-btn" onclick="copyCode(this, 's3')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Blitz (FTAP)</div><div class="code-preview" id="s4">loadstring(game:HttpGet("https://raw.githubusercontent.com/BlizTBr/scripts/refs/heads/main/FTAP.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's4')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Be a Lucky Block</div><div class="code-preview" id="s5">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript/refs/heads/main/be%20a%20lucky%20block"))()</div><button class="copy-btn" onclick="copyCode(this, 's5')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Holon HUB (JP)</div><div class="code-preview" id="s6">loadstring(game:HttpGet("https://raw.githubusercontent.com/hololove1021/HolonHUB/refs/heads/main/language/hub-jp.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's6')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Kurd hub</div><div class="code-preview" id="s7">loadstring(game:HttpGet("https://raw.githubusercontent.com/Ninja10908/S4/refs/heads/main/Kurdhub"))()</div><button class="copy-btn" onclick="copyCode(this, 's7')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Universal Fly GUI v3</div><div class="code-preview" id="s8">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fly-gui-v3-30439"))()</div><button class="copy-btn" onclick="copyCode(this, 's8')">コピー</button></div>
+            <div class="script-card"><div class="script-title">Murderers VS Sheriffs (ZEPHYR)</div><div class="code-preview" id="s9">loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-Duels-ZEPHYR-MVSD-SCRIPT-KEYLESS-36170"))()</div><button class="copy-btn" onclick="copyCode(this, 's9')">コピー</button></div>
+            <div class="script-card"><div class="script-title">99日生き残る (Foxname Hub)</div><div class="code-preview" id="s10">loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's10')">コピー</button></div>
+            <div class="script-card"><div class="script-title">最強の戦場 (Trashcan Man)</div><div class="code-preview" id="s11">loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man"))()</div><button class="copy-btn" onclick="copyCode(this, 's11')">コピー</button></div>
+            <div class="script-card"><div class="script-title">シェナニガンズ</div><div class="code-preview" id="s12">loadstring(game:HttpGet("https://raw.githubusercontent.com/cool5013/TBO/main/TBOscript"))()</div><button class="copy-btn" onclick="copyCode(this, 's12')">コピー</button></div>
+        </div>
+    </div>
+
+    <div id="key-sec" class="section">
+        <div class="list-container">
+            <div class="list-title">Key Retrieval</div>
+            <a href="https://keybypass.net/" target="_blank" class="action-button">keybypass.net</a>
+            <a href="https://bypass.vip/" target="_blank" class="action-button">bypass.vip</a>
+            <a href="https://ace-bypass.com/" target="_blank" class="action-button">ace-bypass.com</a>
+            <a href="https://izen.lol/" target="_blank" class="action-button">izen.lol</a>
+        </div>
+    </div>
+
+    <div id="exec-sec" class="section">
+        <div class="list-container">
+            <div class="list-title">Delta ダウンロード</div>
+            <a href="itms-services://?action=download-manifest&url=https://delta.bz/manifest.plist" class="action-button">Delta ダウンロード 1</a>
+            <a href="itms-services://?action=download-manifest&url=https%3A%2F%2Fdeltaios-executor.com%2FInstall21.plist" class="action-button">Delta ダウンロード 2</a>
+            <a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/davidum19/Delt4-OTA/refs/heads/main/comision/manifest.plist" class="action-button">Delta ダウンロード 3</a>
+            <a href="itms-services://?action=download-manifest&url=https://gloopup.xyz/delta_ios/manifest.plist" class="action-button">Delta ダウンロード 4</a>
+            <a href="https://deltaexploits.gg/delta-executor-ios" target="_blank" class="action-button home">Delta 公式サイト</a>
+
+            <div class="list-title">skibx</div>
+            <a href="itms-services://?action=download-manifest&url=https://skibx.com/ota.plist" class="action-button">skibx ダウンロード</a>
+            <a href="https://skibx.com/" target="_blank" class="action-button home">skibx 公式サイト</a>
+
+            <div class="list-title">KSign (Sign Tool)</div>
+            <a href="https://techybuff.com/all-new-ksign/" target="_blank" class="action-button home">KSign 公式サイト</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(id, el) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyCode(btn, id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = "コピー完了！";
+            btn.classList.add("success");
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove("success");
+            }, 2000);
+        });
+    }
+</script>
+
 </body>
 </html>
+
