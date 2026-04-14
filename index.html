@@ -38,12 +38,11 @@
             z-index: 1000;
         }
 
-        /* タイトルとナビをスマホでも見やすく */
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            flex-direction: column; /* スマホでは縦並び */
+            flex-direction: column;
             align-items: center;
             gap: 15px;
         }
@@ -70,14 +69,29 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-        .nav-item.active { color: var(--accent); background: rgba(231, 76, 60, 0.1); }
+        .nav-item.active { color: var(--btn-blue); background: rgba(52, 152, 219, 0.1); }
 
         .container { flex: 1; padding: 15px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box; }
 
         .section { display: none; }
         .section.active { display: block; }
 
-        /* レスポンシブグリッド：スマホ1列、タブレット2列、PC3列 */
+        /* ジャンル見出しのデザイン（よりGUIライクに修正） */
+        .genre-container { margin-bottom: 30px; }
+        .genre-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 15px;
+            padding-left: 12px;
+            border-left: 4px solid var(--btn-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* レスポンシブグリッド */
         .grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -113,7 +127,7 @@
         }
         .copy-btn.success { background: var(--copy-bg); }
 
-        /* Key / Executor リスト */
+        /* リストスタイル */
         .list-container { display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin: 10px auto; }
         .list-title { color: var(--accent); font-size: 16px; font-weight: bold; margin-top: 15px; }
         
@@ -144,20 +158,49 @@
 
 <div class="container">
     <div id="script-sec" class="section active">
-        <div class="grid">
-            <div class="script-card"><div class="script-title">てるクマ Script 8.5 (Kaminagai)</div><div class="code-preview" id="s1">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript8.5/refs/heads/main/terukumakaminagai"))()</div><button class="copy-btn" onclick="copyCode(this, 's1')">コピー</button></div>
-            <div class="script-card"><div class="script-title">てるクマ Fling (Ikemen)</div><div class="code-preview" id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumafling/refs/heads/main/terukumaikemen"))()</div><button class="copy-btn" onclick="copyCode(this, 's2')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Universal Aimbot (Mobile)</div><div class="code-preview" id="s3">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-Mobile-34677"))()</div><button class="copy-btn" onclick="copyCode(this, 's3')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Blitz (FTAP)</div><div class="code-preview" id="s4">loadstring(game:HttpGet("https://raw.githubusercontent.com/BlizTBr/scripts/refs/heads/main/FTAP.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's4')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Be a Lucky Block</div><div class="code-preview" id="s5">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript/refs/heads/main/be%20a%20lucky%20block"))()</div><button class="copy-btn" onclick="copyCode(this, 's5')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Holon HUB (JP)</div><div class="code-preview" id="s6">loadstring(game:HttpGet("https://raw.githubusercontent.com/hololove1021/HolonHUB/refs/heads/main/language/hub-jp.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's6')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Kurd hub</div><div class="code-preview" id="s7">loadstring(game:HttpGet("https://raw.githubusercontent.com/Ninja10908/S4/refs/heads/main/Kurdhub"))()</div><button class="copy-btn" onclick="copyCode(this, 's7')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Universal Fly GUI v3</div><div class="code-preview" id="s8">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fly-gui-v3-30439"))()</div><button class="copy-btn" onclick="copyCode(this, 's8')">コピー</button></div>
-            <div class="script-card"><div class="script-title">Murderers VS Sheriffs (ZEPHYR)</div><div class="code-preview" id="s9">loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-Duels-ZEPHYR-MVSD-SCRIPT-KEYLESS-36170"))()</div><button class="copy-btn" onclick="copyCode(this, 's9')">コピー</button></div>
-            <div class="script-card"><div class="script-title">99日生き残る (Foxname Hub)</div><div class="code-preview" id="s10">loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's10')">コピー</button></div>
-            <div class="script-card"><div class="script-title">最強の戦場 (Trashcan Man)</div><div class="code-preview" id="s11">loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man"))()</div><button class="copy-btn" onclick="copyCode(this, 's11')">コピー</button></div>
-            <div class="script-card"><div class="script-title">シェナニガンズ</div><div class="code-preview" id="s12">loadstring(game:HttpGet("https://raw.githubusercontent.com/cool5013/TBO/main/TBOscript"))()</div><button class="copy-btn" onclick="copyCode(this, 's12')">コピー</button></div>
+        
+        <div class="genre-container">
+            <div class="genre-title">🐻 てるクマ系</div>
+            <div class="grid">
+                <div class="script-card"><div class="script-title">てるクマ Script 8.5 (Kaminagai)</div><div class="code-preview" id="s1">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript8.5/refs/heads/main/terukumakaminagai"))()</div><button class="copy-btn" onclick="copyCode(this, 's1')">コピー</button></div>
+                <div class="script-card"><div class="script-title">てるクマ Fling (Ikemen)</div><div class="code-preview" id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumafling/refs/heads/main/terukumaikemen"))()</div><button class="copy-btn" onclick="copyCode(this, 's2')">コピー</button></div>
+            </div>
         </div>
+
+        <div class="genre-container">
+            <div class="genre-title">🧠 ブレインロット系</div>
+            <div class="grid">
+                <div class="script-card"><div class="script-title">𝕂𝕦𝕣𝕕 hub</div><div class="code-preview" id="s7">loadstring(game:HttpGet("https://raw.githubusercontent.com/Ninja10908/S4/refs/heads/main/Kurdhub"))()</div><button class="copy-btn" onclick="copyCode(this, 's7')">コピー</button></div>
+            </div>
+        </div>
+
+        <div class="genre-container">
+            <div class="genre-title">🎭 物人</div>
+            <div class="grid">
+                <div class="script-card"><div class="script-title">Blitz (FTAP)</div><div class="code-preview" id="s4">loadstring(game:HttpGet("https://raw.githubusercontent.com/BlizTBr/scripts/refs/heads/main/FTAP.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's4')">コピー</button></div>
+                <div class="script-card"><div class="script-title">Holon HUB (JP)</div><div class="code-preview" id="s6">loadstring(game:HttpGet("https://raw.githubusercontent.com/hololove1021/HolonHUB/refs/heads/main/language/hub-jp.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's6')">コピー</button></div>
+            </div>
+        </div>
+
+        <div class="genre-container">
+            <div class="genre-title">⚙️ Universal script</div>
+            <div class="grid">
+                <div class="script-card"><div class="script-title">Universal Fly GUI v3</div><div class="code-preview" id="s8">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fly-gui-v3-30439"))()</div><button class="copy-btn" onclick="copyCode(this, 's8')">コピー</button></div>
+                <div class="script-card"><div class="script-title">Universal Aimbot (Mobile)</div><div class="code-preview" id="s3">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-Mobile-34677"))()</div><button class="copy-btn" onclick="copyCode(this, 's3')">コピー</button></div>
+            </div>
+        </div>
+
+        <div class="genre-container">
+            <div class="genre-title">📁 その他</div>
+            <div class="grid">
+                <div class="script-card"><div class="script-title">Be a Lucky Block</div><div class="code-preview" id="s5">loadstring(game:HttpGet("https://raw.githubusercontent.com/terukuma616/terukumascript/refs/heads/main/be%20a%20lucky%20block"))()</div><button class="copy-btn" onclick="copyCode(this, 's5')">コピー</button></div>
+                <div class="script-card"><div class="script-title">最強の戦場 (Trashcan Man)</div><div class="code-preview" id="s11">loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man"))()</div><button class="copy-btn" onclick="copyCode(this, 's11')">コピー</button></div>
+                <div class="script-card"><div class="script-title">シェナニガンズ</div><div class="code-preview" id="s12">loadstring(game:HttpGet("https://raw.githubusercontent.com/cool5013/TBO/main/TBOscript"))()</div><button class="copy-btn" onclick="copyCode(this, 's12')">コピー</button></div>
+                <div class="script-card"><div class="script-title">Murderers VS Sheriffs (ZEPHYR)</div><div class="code-preview" id="s9">loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-Duels-ZEPHYR-MVSD-SCRIPT-KEYLESS-36170"))()</div><button class="copy-btn" onclick="copyCode(this, 's9')">コピー</button></div>
+                <div class="script-card"><div class="script-title">99日生き残る (Foxname Hub)</div><div class="code-preview" id="s10">loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()</div><button class="copy-btn" onclick="copyCode(this, 's10')">コピー</button></div>
+            </div>
+        </div>
+
     </div>
 
     <div id="key-sec" class="section">
@@ -214,4 +257,3 @@
 
 </body>
 </html>
-
